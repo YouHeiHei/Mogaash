@@ -1,0 +1,73 @@
+.dictContainer {
+  max-width: 100%;
+  max-height: 100%;
+  margin: 20px;
+}
+
+.searchBar {
+  display: flex;
+  flex-direction: row;
+}
+
+.searchForm {
+  /* margin-right: 10px; */
+}
+
+.searchButton {
+}
+
+.vocabContainer {
+  width: 100%;
+  margin-block: 20px;
+  padding-block: 20px;
+  border-radius: 15px;
+  border: 3px solid #fff;
+}
+
+.title {
+  text-align: center;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 24px;
+  color: #fff;
+}
+
+.wordDef {
+  margin-inline: 20px;
+  padding-inline: 20px;
+  padding-bottom: 10px;
+  margin-block: 10px;
+  background-color: rgb(13, 123, 163);
+  border-radius: 15px;
+  border: 4px solid rgb(1, 97, 156);
+}
+
+.defRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.defIndex {
+  min-width: 25px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  color: #fff;
+}
+
+.wordType {
+  /* font-weight: bold; */
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  color: #ddd;
+}
+
+.wordDefText {
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  color: #fff;
+  padding-left: 20px;
+}

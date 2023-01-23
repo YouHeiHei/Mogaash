@@ -1,0 +1,298 @@
+[
+  {
+    "word": "censure",
+    "list_name": "Test_List_1",
+    "def": [
+      {
+        "type": "noun",
+        "text": "harsh criticism or disapproval"
+      },
+      {
+        "type": "noun",
+        "text": "the state of being excommunicated"
+      },
+      {
+        "type": "verb",
+        "text": "rebuke formally"
+      }
+    ]
+  },
+  {
+    "word": "calumny",
+    "list_name": "Test_List_1",
+    "def": [
+      {
+        "type": "noun",
+        "text": "a false accusation of an offense or a malicious misrepresentation of someone's words or actions"
+      },
+      {
+        "type": "noun",
+        "text": "an abusive attack on a person's character or good name"
+      }
+    ]
+  },
+  {
+    "word": "undermine",
+    "list_name": "Test_List_1",
+    "def": [
+      {
+        "type": "verb",
+        "text": "destroy property or hinder normal operations"
+      },
+      {
+        "type": "verb",
+        "text": "hollow out as if making a cave or opening"
+      }
+    ]
+  },
+  {
+    "word": "prodigal",
+    "list_name": "Test_List_1",
+    "def": [
+      {
+        "type": "adjective",
+        "text": "recklessly wasteful"
+      },
+      {
+        "type": "adjective",
+        "text": "giving or having in a lavish, abundant, or bountiful way"
+      },
+      {
+        "type": "noun",
+        "text": "a recklessly extravagant person"
+      },
+      {
+        "type": "noun",
+        "text": "someone who returns after a long absence characterized by reckless behavior"
+      }
+    ]
+  },
+  {
+    "word": "intimate",
+    "list_name": "Test_List_1",
+    "def": [
+      {
+        "type": "adjective",
+        "text": "marked by close acquaintance, association, or familiarity"
+      },
+      {
+        "type": "adjective",
+        "text": "having mutual interests or affections; of established friendship"
+      },
+      {
+        "type": "adjective",
+        "text": "involved in a sexual relationship"
+      },
+      {
+        "type": "adjective",
+        "text": "thoroughly acquainted through study or experience"
+      },
+      {
+        "type": "adjective",
+        "text": "innermost or essential"
+      },
+      {
+        "type": "adjective",
+        "text": "having or fostering a warm or friendly and informal atmosphere"
+      },
+      {
+        "type": "noun",
+        "text": "someone to whom private matters are confided"
+      },
+      {
+        "type": "verb",
+        "text": "imply as a possibility"
+      },
+      {
+        "type": "verb",
+        "text": "give to understand"
+      }
+    ]
+  },
+  {
+    "word": "mercurial",
+    "list_name": "Test_List_1",
+    "def": [
+      {
+        "type": "adjective",
+        "text": "liable to sudden unpredictable change"
+      },
+      {
+        "type": "adjective",
+        "text": "relating to or containing or caused by mercury"
+      }
+    ]
+  },
+  {
+    "word": "parochial",
+    "list_name": "Test_List_2",
+    "def": [
+      {
+        "type": "adjective",
+        "text": "relating to or supported by or located in a parish"
+      },
+      {
+        "type": "adjective",
+        "text": "narrowly restricted in outlook or scope"
+      }
+    ]
+  },
+  {
+    "word": "enervate",
+    "list_name": "Test_List_2",
+    "def": [
+      {
+        "type": "verb",
+        "text": "weaken physically, mentally, or morally"
+      },
+      {
+        "type": "verb",
+        "text": "disturb the composure of"
+      }
+    ]
+  },
+  {
+    "word": "iconoclast",
+    "list_name": "Test_List_2",
+    "def": [
+      {
+        "type": "noun",
+        "text": "someone who attacks cherished ideas or traditional institutions"
+      },
+      {
+        "type": "noun",
+        "text": "a destroyer of images used in religious worship"
+      }
+    ]
+  },
+  {
+    "word": "anomalous",
+    "list_name": "Test_List_2",
+    "def": [
+      {
+        "type": "adjective",
+        "text": "deviating from the general or common order or type"
+      }
+    ]
+  },
+  {
+    "word": "galvanize",
+    "list_name": "Test_List_2",
+    "def": [
+      {
+        "type": "verb",
+        "text": "stimulate (muscles) by administering a shock"
+      },
+      {
+        "type": "verb",
+        "text": "stimulate to action"
+      },
+      {
+        "type": "verb",
+        "text": "cover with zinc"
+      }
+    ]
+  },
+  {
+    "word": "demur",
+    "list_name": "Test_List_2",
+    "def": [
+      {
+        "type": "verb",
+        "text": "take exception to"
+      },
+      {
+        "type": "noun",
+        "text": "(law) a formal objection to an opponent's pleadings"
+      },
+      {
+        "type": "verb",
+        "text": "enter a demurrer"
+      }
+    ]
+  },
+  {
+    "word": "gregarious",
+    "list_name": "Test_List_3",
+    "def": [
+      {
+        "type": "adjective",
+        "text": "instinctively or temperamentally seeking and enjoying the company of others"
+      },
+      {
+        "type": "adjective",
+        "text": "(of animals) tending to form a group with others of the same species"
+      },
+      {
+        "type": "adjective",
+        "text": "(of plants) growing in groups that are close together"
+      }
+    ]
+  },
+  {
+    "word": "ambivalent",
+    "list_name": "Test_List_3",
+    "def": [
+      {
+        "type": "adjective",
+        "text": "uncertain or unable to decide about what course to follow"
+      }
+    ]
+  },
+  {
+    "word": "venality",
+    "list_name": "Test_List_3",
+    "def": [
+      {
+        "type": "noun",
+        "text": "prostitution of talents or offices or services for reward"
+      }
+    ]
+  },
+  {
+    "word": "innocuous",
+    "list_name": "Test_List_3",
+    "def": [
+      {
+        "type": "adjective",
+        "text": "not injurious to physical or mental health"
+      },
+      {
+        "type": "adjective",
+        "text": "lacking intent or capacity to injure"
+      },
+      {
+        "type": "adjective",
+        "text": "not causing disapproval"
+      }
+    ]
+  },
+  {
+    "word": "amorphous",
+    "list_name": "Test_List_3",
+    "def": [
+      {
+        "type": "adjective",
+        "text": "having no definite form or distinct shape"
+      },
+      {
+        "type": "adjective",
+        "text": "without real or apparent crystalline form"
+      },
+      {
+        "type": "adjective",
+        "text": "lacking the system or structure characteristic of living bodies"
+      }
+    ]
+  },
+  {
+    "word": "parsimonious",
+    "list_name": "Test_List_3",
+    "def": [
+      {
+        "type": "adjective",
+        "text": "excessively unwilling to spend"
+      }
+    ]
+  }
+]
