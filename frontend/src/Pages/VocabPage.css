@@ -1,0 +1,75 @@
+.VocabPageBox {
+  padding: 20px;
+}
+
+.ListName {
+  padding-left: 10px;
+  font-weight: bold;
+  font-size: 24px;
+  color: #fff;
+}
+
+.VocabCapsule {
+  margin-inline: 15vw;
+  margin-top: 20px;
+  border-radius: 15px;
+  min-width: 40vw;
+  /* border: 3px solid #fff; */
+  background-color: rgb(52, 126, 171);
+
+  padding: 20px;
+}
+
+.Vocab {
+  padding-top: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 36px;
+  color: #fff;
+}
+
+.VocabDef {
+  max-width: 80%;
+  padding-inline: 20px;
+  margin-top: 20px;
+  margin-bottom: 60px;
+  margin-right: 20px;
+}
+
+.defRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.defIndex {
+  min-width: 25px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  color: #fff;
+}
+
+.ButtonWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.YesButton {
+  background-color: rgb(77, 176, 158);
+  font-size: 20px;
+  width: 100px;
+  height: 60px;
+  margin-right: 40px;
+  border-radius: 9px;
+}
+
+.NoButton {
+  background-color: rgb(223, 106, 138);
+  font-size: 20px;
+  width: 100px;
+  height: 60px;
+  border-radius: 9px;
+}

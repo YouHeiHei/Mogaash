@@ -9,7 +9,6 @@ const FloatingDictionary = () => {
   const [hasSearched, setHasSearched] = useState(false);
   const [wordDef, setWordDef] = useState({ word: "", def: [] });
   const [defRender, setDefRender] = useState(<div />);
-  console.log("new render: " + value);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -46,11 +45,11 @@ const FloatingDictionary = () => {
           {wordDef.def.map((def, index) => (
             <div className="wordDef" id={index}>
               <div className="defRow">
-                <div className="defIndex">{index + 1}.</div>
-                <div className="wordType">{def.type}</div>
+                <span className="defIndex">{index + 1}.</span>
+                <span className="wordType">{def.type}</span>
               </div>
 
-              <div className="wordDefText">{def.text}</div>
+              <span className="wordDefText">{def.text}</span>
             </div>
           ))}
         </div>
