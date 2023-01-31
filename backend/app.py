@@ -23,8 +23,9 @@ def word_search():
     word = args.get("name")
     data = collection.find_one({"word": word})
     if data is not None:
-        print(data["def"])
-        return flask.jsonify(data["def"])
+        dict = {"word": word, "def": data["def"]}
+        print(dict)
+        return flask.jsonify(dict)
     print(word)
-    return get_word_def_from_API(word)
+    return flask.jsonify(get_word_def_from_API(word))
 
