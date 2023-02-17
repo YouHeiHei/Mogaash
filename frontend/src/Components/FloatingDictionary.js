@@ -61,7 +61,7 @@ const FloatingDictionary = () => {
 
   return (
     <div className="dictContainer">
-      <Form>
+      <Form className="searchForm">
         <Form.Group className="searchBar">
           <Form.Control
             placeholder="Enter word"

@@ -2,15 +2,15 @@ import flask
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 
-from database import get_collection
-from helper import get_word_def_from_API, choose_word_from_list
+from database import get_db
+from helper import get_word_def_from_API, choose_word_from_list, test_api
 
 
 app = Flask(__name__)
 cors = CORS(app)
 # app.config['CORS_HEADERS'] = 'Content-Type'
-collection = get_collection()
-
+db = get_db()
+collection = db.Vocab
 
 @app.route("/")
 def test():
@@ -74,3 +74,13 @@ def get_random_word():
         return flask.jsonify(choose_word_from_list(data))
     print(list_name)
     return "SORRY!"
+
+
+@app.route("/test", methods=['GET'])
+def api():
+    # http://127.0.0.1:5000/test?word=censure
+    args = request.args
+    test_word = args.get("word")
+    res = test_api(test_word)
+    # return flask.jsonify(res)
+    return "test"

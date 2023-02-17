@@ -29,7 +29,6 @@
 }
 
 .VocabDef {
-  max-width: 80%;
   padding-inline: 20px;
   margin-top: 20px;
   margin-bottom: 60px;
@@ -55,21 +54,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .YesButton {
   background-color: rgb(77, 176, 158);
   font-size: 20px;
-  width: 100px;
+  width: 20%;
   height: 60px;
-  margin-right: 40px;
+  margin-right: 10%;
   border-radius: 9px;
 }
 
 .NoButton {
   background-color: rgb(223, 106, 138);
   font-size: 20px;
-  width: 100px;
+  width: 20%;
   height: 60px;
   border-radius: 9px;
 }

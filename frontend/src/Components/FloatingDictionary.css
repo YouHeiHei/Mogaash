@@ -4,16 +4,14 @@
   margin: 20px;
 }
 
+.searchForm {
+  min-height: 40px;
+}
+
 .searchBar {
   display: flex;
   flex-direction: row;
-}
-
-.searchForm {
-  /* margin-right: 10px; */
-}
-
-.searchButton {
+  min-height: 40px;
 }
 
 .vocabContainer {

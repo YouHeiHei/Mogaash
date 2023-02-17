@@ -1,10 +1,10 @@
 from pymongo import MongoClient
 
 
-def get_collection():
+def get_db():
     client = MongoClient('localhost', 27017)
     db = client.Mogaash
-    return db.Vocab
+    return db
 
 
 def write_word_to_db(collection):
