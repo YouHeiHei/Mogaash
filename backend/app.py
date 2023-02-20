@@ -2,15 +2,17 @@ import flask
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 
-from database import get_db
-from helper import get_word_def_from_API, choose_word_from_list, test_api
+from database import get_db, get_word_def, write_memovalue_to_db
+from helper import get_word_def_from_API, choose_word_from_list, get_word_definition_from_MW_API
 
 
 app = Flask(__name__)
 cors = CORS(app)
 # app.config['CORS_HEADERS'] = 'Content-Type'
 db = get_db()
-collection = db.Vocab
+vocab_coll = db.Vocab
+memovalue_coll = db.MemoValue
+
 
 @app.route("/")
 def test():
@@ -21,30 +23,70 @@ def test():
 def word_search():
 
     """
-    Search specific word in database
+    Get <word> definition from database:
+        if <word> is not in database, it will make request to MW API and write definition to the database
 
     :param
         http://127.0.0.1:5000/word?name=[WORD_TO_REPLACE]
-    ex.
-        http://127.0.0.1:5000/word?name=censure =>
-        {"def":
-            [{"text":"harsh criticism or disapproval","type":"noun"},
-            {"text":"the state of being excommunicated","type":"noun"},
-            {"text":"rebuke formally","type":"verb"}],
-        "word":"censure"}
 
-    :return: {"def":[LIST OF DEFINITION: {"text" : "DEF"}], "word":"WORD"}
-        if WORD not in database, list will be empty
+    ex.
+        http://127.0.0.1:5000/word?name=wind =>
+        {
+            "word": "wind",
+            "sense_list": [
+                {
+                    "def_list": [
+                        [
+                            [
+                                {
+                                    "text": "a force or agency that carries along or influences tendency, trend",
+                                    "usage": [
+                                        "withstood the winds of popular opinion"
+                                    ]
+                                },
+                                {
+                                    "text": "a destructive force or influence"
+                                }
+                            ]
+                        ]
+                    ],
+                    "fl": "noun",
+                    "sound": [
+                        "wind0003",
+                        "wind0004"
+                    ]
+                }
+            }
+        }
+
+    :return:
+        {
+            "word": "WORD",
+            "sense_list": [
+                {
+                    "def_list" : [
+                        [
+                            [
+                                {
+                                    "text": <Definition Text>,
+                                    (Optional)"usage": ["<Word Usage>", ...]
+                                }
+                            ]
+                        ]
+                    ],
+                    "fl": "<Function Label, ex. 'noun', 'verb'>",
+                    "sound": [
+                        "<audio filename for MW media api>", ...
+                    ]
+                }, ...
+            ]
+        }
     """
     args = request.args
     word = args.get("name")
-    data = collection.find_one({"word": word})
-    if data is not None:
-        dict = {"word": word, "def": data["def"]}
-        print(dict)
-        return flask.jsonify(dict)
-    print(word)
-    return flask.jsonify(get_word_def_from_API(word))
+    data = get_word_def(vocab_coll, word)
+    # print(data)
+    return flask.jsonify(data)
 
 
 @app.route("/randWord", methods=['GET'])
@@ -53,34 +95,74 @@ def get_random_word():
     Handles "Get next word" function based on input list_name
 
     :param
-        http://127.0.0.1:5000/randWord?list=[LIST_NAME_TO_REPLACE]
+        http://127.0.0.1:5000/randWord?list=[LIST_NAME_TO_REPLACE]&prev=[previous word]
     ex.
-        http://127.0.0.1:5000/randWord?list=Test_List_1 =>
-        {"def":
-            [{"text":"harsh criticism or disapproval","type":"noun"},
-            {"text":"the state of being excommunicated","type":"noun"},
-            {"text":"rebuke formally","type":"verb"}],
-        "word":"censure"}
+        http://127.0.0.1:5000/randWord?list=Test_List_1&prev=censure =>
+        {
+        "sense_list": [
+            {
+                "def_list": [
+                    [
+                        [
+                            {
+                                "text": "to subvert or weaken insidiously or secretly",
+                                "usage": [
+                                    "trying to undermine his political rivals"
+                                ]
+                            }
+                        ],
+                    ]
+                ],
+                "fl": "verb",
+                "sound": [
+                    "underm02"
+                ]
+            }
+        ],
+        "word": "undermine"
+    }
 
     :return: Selected word and its definition in database based on algorithm
-        {"def":[LIST OF DEFINITION: {"text" : "DEF"}], "word":"WORD"}
+        {
+            "word": "WORD",
+            "sense_list": [
+                {
+                    "def_list" : [
+                        [
+                            [
+                                {
+                                    "text": <Definition Text>,
+                                    (Optional)"usage": ["<Word Usage>", ...]
+                                }
+                            ]
+                        ]
+                    ],
+                    "fl": "<Function Label, ex. 'noun', 'verb'>",
+                    "sound": [
+                        "<audio filename for MW media api>", ...
+                    ]
+                }, ...
+            ]
+        }
     """
     args = request.args
     list_name = args.get("list")
-    data = list(collection.find({"list_name": list_name}))
-    data = [{"word": d["word"], "def": d["def"]} for d in data]
+    prev_word = args.get("prev")
+    data = list(memovalue_coll.find({"list_name": list_name}, {"_id": False}))
+
     if data:
-        print(choose_word_from_list(data))
-        return flask.jsonify(choose_word_from_list(data))
-    print(list_name)
-    return "SORRY!"
+        new_word = choose_word_from_list(data, prev_word)
+        print(new_word)
+        return flask.jsonify(get_word_def(vocab_coll, new_word))
+    return flask.jsonify(data)
 
 
 @app.route("/test", methods=['GET'])
 def api():
-    # http://127.0.0.1:5000/test?word=censure
+    # http://127.0.0.1:5000/test?word=censure&list_name=test_list1&value=0
     args = request.args
-    test_word = args.get("word")
-    res = test_api(test_word)
-    # return flask.jsonify(res)
-    return "test"
+    word = args.get("word")
+    list_name = args.get("list_name")
+    value = args.get("value", type=int)
+    res = write_memovalue_to_db(memovalue_coll, word, list_name, value)
+    return flask.jsonify(res)

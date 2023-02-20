@@ -1,5 +1,7 @@
 import random
 import re
+import string
+
 import requests
 from dotenv import load_dotenv
 
@@ -15,9 +17,12 @@ def get_word_def_from_API(word):
     return {"word": word, "def": []}
 
 
-def choose_word_from_list(l):
+def choose_word_from_list(word_list, prev_word):
     # TODO: better algorithm based on familiarity with the word
-    return random.choice(l)
+    new_word = random.choice(word_list)
+    while new_word["word"] == prev_word:
+        random.choice(word_list)
+    return new_word["word"]
 
 
 def simplify_text_from_MW(text):
@@ -53,16 +58,49 @@ def simplify_text_from_MW(text):
     return simplified_text
 
 
-def get_full_def(definition: list):
+def get_sound_from_MW_API(base_filename: str):
+    # Pronunciation:
+    # "hwi" => "prs" [] => "sound" => "audio"
+    #
+    # "https://media.merriam-webster.com/audio/prons/en/us/mp3/[subdirectory]/[base filename].mp3"
+    # [subdirectory] is determined as follows:
+    #   if audio begins with "bix", the subdirectory should be "bix",
+    #   if audio begins with "gg", the subdirectory should be "gg",
+    #   if audio begins with a number or punctuation (eg, "_"), the subdirectory should be "number",
+    #   otherwise, the subdirectory is equal to the first letter of audio.
+
+    sound_link_prefix = "https://media.merriam-webster.com/audio/prons/en/us/mp3/"
+    sound_link_suffix = ".mp3"
+
+    subdirectory = base_filename[0]
+    regex1 = re.compile(r'^bix')
+    regex2 = re.compile(r'^gg')
+    if regex1.search(base_filename):
+        subdirectory = "bix"
+    elif regex2.search(base_filename):
+        subdirectory = "gg"
+    elif subdirectory.isdigit() or subdirectory in string.punctuation:
+        subdirectory = "number"
+
+    return '{}{}/{}{}'.format(sound_link_prefix, subdirectory, base_filename, sound_link_suffix)
+
+
+def get_filtered_definition_from_API_result(word, definition):
     list_of_def_dict = []
 
     for i in definition:
-
-        if "def" in i and "fl" in i:
+        if "def" in i and "fl" in i and "hwi" in i:
             def_dict = {"fl": i["fl"]}
+            sound_list = []
+            if "prs" in i["hwi"]:
+                for pr in i["hwi"]["prs"]:
+                    if "sound" in pr:
+                        sound = pr["sound"]["audio"]
+                        sound_list.append(sound)
+                        print(get_sound_from_MW_API(sound))
+            def_dict["sound"] = sound_list
 
             definitions = i["def"]
-
             def_list = []
             for de in definitions:
                 temp_dict = {"vd": "not verb"}
@@ -90,49 +128,35 @@ def get_full_def(definition: list):
                                     text_type = t[0]
 
                                     if text_type == "text":
-                                        # sense_dict["def"] = t[1]
-                                        sense_dict["def"] = simplify_text_from_MW(t[1])
+                                        sense_dict["text"] = simplify_text_from_MW(t[1])
                                     elif text_type == "vis":
                                         usages = t[1]
                                         usage_list = []
                                         for usage in usages:
-                                            # usage_list.append(usage["t"])
                                             usage_list.append(simplify_text_from_MW(usage["t"]))
-
                                         sense_dict["usage"] = usage_list
+                                    elif text_type == "uns":
+                                        usages = t[1]
+                                        usage = usages[0]
+                                        text = usage[0]
+                                        sense_dict["text"] = simplify_text_from_MW(text[1])
                             sense_list.append(sense_dict)
                     sseq_list.append(sense_list)
                 def_list.append(sseq_list)
-            def_dict["def"] = def_list
+            def_dict["def_list"] = def_list
             list_of_def_dict.append(def_dict)
-    print(list_of_def_dict)
+    # print(list_of_def_dict)
+
+    return {"word": word, "sense_list": list_of_def_dict}
 
 
-def test_api(test_word: str):
-    req_link = 'https://dictionaryapi.com/api/v3/references/collegiate/json/{}?key={}'.format(test_word, dictionary_api_key)
+def get_word_definition_from_MW_API(word: str):
+    req_link = 'https://dictionaryapi.com/api/v3/references/collegiate/json/{}?key={}'.format(word, dictionary_api_key)
 
     r = requests.get(req_link)
     definition = r.json()
 
-    # Pronunciation:
-    # "hwi" => "prs" [] => "sound" => "audio"
-    #
-    # "https://media.merriam-webster.com/audio/prons/en/us/mp3/[subdirectory]/[base filename].mp3"
-    # [subdirectory] is determined as follows:
-    #   if audio begins with "bix", the subdirectory should be "bix",
-    #   if audio begins with "gg", the subdirectory should be "gg",
-    #   if audio begins with a number or punctuation (eg, "_"), the subdirectory should be "number",
-    #   otherwise, the subdirectory is equal to the first letter of audio.
+    res = get_filtered_definition_from_API_result(word, definition)
 
-    # Vocab type:
-    # "fl"
-
-    # Definition:
-    # "def" [] => "vd" (transitive / intransitive),
-    #             "sseq" [] => [] => []@[1] => "sn" sense number
-    #                                          "dt" definition text []@[0] => []@[1] => definition
-    #                                                               []@[1+](optional) => []@[1] [] => "t" => phrase/sentence ex.
-
-    get_full_def(definition)
-
-    return definition
+    # print(res)
+    return res
