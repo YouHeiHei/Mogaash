@@ -41,15 +41,27 @@ const FloatingDictionary = () => {
       setDefRender(
         <div className="vocabContainer">
           <div className="title">{wordDef.word}</div>
+          {wordDef.sense_list.map((sense, index) => (
+            <div>
+              <div className="wordType">{sense.fl}</div>
 
-          {wordDef.def.map((def, index) => (
-            <div className="wordDef" id={index}>
-              <div className="defRow">
-                <span className="defIndex">{index + 1}.</span>
-                <span className="wordType">{def.type}</span>
-              </div>
-
-              <span className="wordDefText">{def.text}</span>
+              {sense.def_list.map((defs, index) => (
+                <div className="fd_defsBox">
+                  {defs.map((def, index) => (
+                    <div className="fd_defBox">
+                      <span className="fd_defIndex">{index + 1}.</span>
+                      <div>
+                        {def.map((d, index) => (
+                          <div className="fd_defUsageBox">
+                            <div className="wordDefText">{d.text}</div>
+                            <div className="wordUsageText">{d.usage}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
           ))}
         </div>
@@ -74,7 +86,12 @@ const FloatingDictionary = () => {
               }
             }}
           />
-          <Button variant="primary" type="button" onClick={handleSubmit}>
+          <Button
+            variant="primary"
+            type="button"
+            onClick={handleSubmit}
+            style={{ marginLeft: "10px" }}
+          >
             Search
           </Button>
         </Form.Group>

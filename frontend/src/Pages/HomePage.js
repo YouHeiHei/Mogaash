@@ -1,31 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./HomePage.css";
 import VocabList from "../Components/VocabList";
 
 const Homepage = () => {
+  const [allVocabListSummary, setAllVocabListSummary] = useState([]);
+
+  useEffect(() => {
+    const getVocabListSummary = async (listName) => {
+      const allSummary = await fetch(
+        `http://127.0.0.1:5000/vocab_list_summary`
+      );
+      const vocabListSummary = await allSummary.json();
+      setAllVocabListSummary(vocabListSummary);
+    };
+    getVocabListSummary();
+  }, []);
+
   return (
     <div className="center">
-      <VocabList
-        listName="Test_List_1"
-        listNum={0}
-        success={90}
-        warning={10}
-        danger={0}
-      ></VocabList>
-      <VocabList
-        listName="Test_List_2"
-        listNum={1}
-        success={40}
-        warning={10}
-        danger={40}
-      ></VocabList>
-      <VocabList
-        listName="Test_List_3"
-        listNum={2}
-        success={50}
-        warning={30}
-        danger={2}
-      ></VocabList>
+      {allVocabListSummary.map((summary) => (
+        <VocabList
+          listName={summary.list_name}
+          listNum={summary.list_num}
+          success={summary.success}
+          warning={summary.warning}
+          danger={summary.danger}
+          total={summary.success + summary.warning + summary.danger}
+          id={summary.list_num}
+        ></VocabList>
+      ))}
 
       {/* <Routes>
         <Route
